@@ -1,0 +1,11 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div *ngFor="let field of formConfig">
+    <label [for]="field.name">{{ field.label }}</label>
+    <input
+      [formControlName]="field.name"
+      [id]="field.name"
+      [type]="field.type"
+    />
+  </div>
+  <button type="submit">Submit</button>
+</form>

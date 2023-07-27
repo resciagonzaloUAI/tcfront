@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+  <form
+    [formGroup]="form"
+    [ngClass]="{ 'two-columns': data.formConfig.length > 4 }"
+    class="form-container"
+  >
+    <div *ngFor="let field of data.formConfig" class="form-field">
+      <label [for]="field.name">{{ field.label }}</label>
+      <input
+        [formControlName]="field.name"
+        [id]="field.name"
+        [type]="field.type"
+        [value]="field.value"
+      />
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onSubmit()">Submit</button>
+  <button mat-button (click)="onClose()">Close</button>
+</mat-dialog-actions>

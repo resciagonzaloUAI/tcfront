@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <span>SIC - Sistema Integral de Carnicerias</span>
+
+  <div class="spacer">
+    <button mat-button [matMenuTriggerFor]="productsMenu">Facturas</button>
+    <mat-menu #productsMenu="matMenu">
+      <button mat-menu-item routerLink="/factura/new">Crear Factura</button>
+      <button mat-menu-item routerLink="/factura">Ver Listado Facturas</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="factsMenu">NP</button>
+    <mat-menu #factsMenu="matMenu">
+      <button mat-menu-item routerLink="/nota-pedido/new">Crear NP</button>
+      <button mat-menu-item routerLink="/nota-pedido">Ver Listado NP</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="remsMenu">Remito</button>
+    <mat-menu #remsMenu="matMenu">
+      <button mat-menu-item routerLink="/remito">Ver Remitos</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="stockMenu">Stock</button>
+    <mat-menu #stockMenu="matMenu">
+      <button mat-menu-item routerLink="/almacen">Ver Stock</button>
+      <button mat-menu-item routerLink="/almacen">Editar Stock</button>
+      <button mat-menu-item routerLink="/almacen">Confirmar Recepción</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="clientesMenu">Clientes</button>
+    <mat-menu #clientesMenu="matMenu">
+      <button mat-menu-item routerLink="/cliente">Listado Clientes</button>
+      <button mat-menu-item routerLink="/cliente">Editar Cliente</button>
+    </mat-menu>
+    <button mat-button routerLink="/">Inicio</button>
+  </div>
+</mat-toolbar>
