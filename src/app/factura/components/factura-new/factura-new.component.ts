@@ -158,7 +158,7 @@ export class FacturaNewComponent implements OnInit {
     const factura: Factura = {
       idCliente: this.clienteControl.getRawValue().idcliente,
       facturaArticulo: this.selectedArticulos.map((art) => ({
-        articuloId: art.articulo.idArt,
+        idArticulo: art.articulo.idArt,
         cantidad: art.cantidad,
       })),
       idpedido:

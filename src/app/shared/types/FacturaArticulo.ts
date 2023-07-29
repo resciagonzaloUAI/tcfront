@@ -1,5 +1,5 @@
 export interface FacturaArticulo {
   facturaId?: number;
-  articuloId?: number;
+  idArticulo?: number;
   cantidad?: number;
 }
