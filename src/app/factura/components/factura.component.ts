@@ -11,6 +11,9 @@ import { noop, tap } from 'rxjs';
 export class FacturaComponent implements OnInit {
   facturas: any[] = [];
   headers: Array<string> = ['Nro. Factura', 'Nro. Pedido', 'Precio'];
+  actions: Array<{ name: string; label: string }> = [
+    { name: 'download', label: 'Descargar' },
+  ];
 
   constructor(
     private readonly facturaService: FacturaService,
@@ -29,6 +32,8 @@ export class FacturaComponent implements OnInit {
       .getAll()
       .pipe(
         tap((facturas) => {
+          console.log(facturas);
+
           this.facturas = facturas.map((fact) => {
             return {
               'Nro. Factura': fact.idbfactura,
@@ -41,7 +46,7 @@ export class FacturaComponent implements OnInit {
       )
       .subscribe(noop);
   }
-  /* 
+  /*
   onTableAction({ name, row }: { name: string; row: any }) {
     if (name === 'edit') {
       // Handle edit
