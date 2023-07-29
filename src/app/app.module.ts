@@ -23,6 +23,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { GenericFormComponent } from './shared/components/generic-form/components/generic-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FacturaModule } from './factura/factura.module';
+import { HomeComponent } from './home/components/home.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { FacturaModule } from './factura/factura.module';
     UsersComponent,
     NavbarComponent,
     FooterComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

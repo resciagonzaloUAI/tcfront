@@ -43,7 +43,7 @@
       </mat-form-field>
     </div>
     <div>
-      <div class="form-item-group">
+      <div class="form-button-group">
         <mat-form-field class="example-full-width">
           <mat-label>Productos</mat-label>
           <input
@@ -74,9 +74,10 @@
             [formControl]="artQty"
           />
         </mat-form-field>
-        <button mat-button (click)="addArticulo()">Agregar</button>
+        <div class="form-button-group">
+          <button mat-button (click)="addArticulo()">Agregar</button>
+        </div>
       </div>
-
       <div>
         <div *ngIf="selectedArticulos.length > 0">
           <span *ngFor="let selection of selectedArticulos"

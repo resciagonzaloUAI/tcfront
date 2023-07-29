@@ -1,4 +1,4 @@
-form {
+/* form {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -46,4 +46,39 @@ button:disabled {
 
 .form-text {
   color: red;
+}
+*/
+
+form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2563eb;
+  color: #f3f4f6;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  background-color: #1d4ed8;
 }

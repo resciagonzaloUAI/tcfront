@@ -3,6 +3,7 @@ import {
   faFacebook,
   faTwitter,
   faInstagram,
+  faGithub,
 } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
@@ -18,4 +19,5 @@ export class FooterComponent implements OnInit {
   faFacebook = faFacebook;
   faTwitter = faTwitter;
   faInstagram = faInstagram;
+  faGithub = faGithub;
 }

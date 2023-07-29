@@ -62,3 +62,20 @@ mat-toolbar {
 .dropdown-content a:hover {
   background-color: #444;
 }
+
+button {
+  font-size: 0.7em; /* Increased the font size */
+  margin-right: 20px; /* Increased the space to the right of each button */
+  padding: 10px 20px; /* Added padding to make the button larger */
+  background-color: #fffff0; /* Button color */
+  color: black; /* Text color */
+  border: none; /* Remove border */
+  cursor: pointer; /* Cursor effect */
+  text-decoration: none; /* Remove text underline */
+  transition: 0.3s; /* Transition effect */
+  border-radius: 5px; /* Rounded corners */
+}
+
+button:hover {
+  background-color: #d3d3d3; /* Darken button color when hovered */
+}

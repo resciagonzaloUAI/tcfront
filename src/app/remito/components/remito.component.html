@@ -1,1 +1,8 @@
-<p>remito works!</p>
+<div>
+  <app-table
+    [headers]="headers"
+    [data]="remitos"
+    [actions]="actions"
+    (action)="onTableAction($event)"
+  ></app-table>
+</div>

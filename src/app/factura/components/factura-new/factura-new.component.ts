@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ClienteService } from 'src/app/cliente/services/cliente.service';
 import { ArticulosService } from 'src/app/articulos/services/articulos.service';
+import { FacturaService } from '../../services/factura.service';
+import { Factura } from 'src/app/shared/types/Factura';
 
 @Component({
   selector: 'app-factura-new',
@@ -22,6 +24,12 @@ import { ArticulosService } from 'src/app/articulos/services/articulos.service';
 export class FacturaNewComponent implements OnInit {
   clienteControl = new FormControl<string | any>('');
   articuloControl = new FormControl<string | any>('');
+  notaPedido = new FormControl<boolean>(false);
+  generaRemito = new FormControl<boolean>(false);
+  notaPedidoNro = new FormControl<number | null>({
+    value: null,
+    disabled: true,
+  });
   artQty = new FormControl<string | any>('');
   options: any[] = [{ name: 'Mary' }, { name: 'Shelley' }, { name: 'Igor' }];
   filteredClientes: Observable<any[]> = of([]);
@@ -34,10 +42,23 @@ export class FacturaNewComponent implements OnInit {
   selectedArticulos: any[] = [];
   constructor(
     private readonly clientService: ClienteService,
-    private readonly articulosService: ArticulosService
+    private readonly articulosService: ArticulosService,
+    private readonly facturaService: FacturaService
   ) {}
 
   ngOnInit() {
+    this.notaPedido.valueChanges
+      .pipe(
+        tap((value) => {
+          if (value) {
+            this.notaPedidoNro.enable();
+          } else {
+            this.notaPedidoNro.disable();
+          }
+        })
+      )
+      .subscribe(noop);
+
     this.clientService
       .getAll()
       .pipe(
@@ -129,5 +150,28 @@ export class FacturaNewComponent implements OnInit {
 
   setQty(qty: any) {
     console.log(qty);
+  }
+
+  crearFactura(): void {
+    console.log(this.clienteControl.getRawValue());
+
+    const factura: Factura = {
+      idCliente: this.clienteControl.getRawValue().idcliente,
+      facturaArticulo: this.selectedArticulos.map((art) => ({
+        articuloId: art.articulo.idArt,
+        cantidad: art.cantidad,
+      })),
+      idpedido:
+        this.notaPedido.value && this.notaPedidoNro.value
+          ? this.notaPedidoNro.value
+          : undefined,
+      generaRemito: !!this.generaRemito.value,
+    };
+    console.log(factura);
+
+    this.facturaService
+      .create(factura)
+      .pipe(tap((resp) => console.log(resp)))
+      .subscribe(noop);
   }
 }
