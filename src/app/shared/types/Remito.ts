@@ -1,5 +1,5 @@
 export interface Remito {
-  idRem?: number;
+  idremito?: number;
   idcfactura?: number;
   idpedido?: number;
   importeFinal?: number;

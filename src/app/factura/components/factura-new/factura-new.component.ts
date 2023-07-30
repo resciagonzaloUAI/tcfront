@@ -1,20 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, noop, of } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
-import { NgFor, AsyncPipe } from '@angular/common';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { ClienteService } from 'src/app/cliente/services/cliente.service';
 import { ArticulosService } from 'src/app/articulos/services/articulos.service';
 import { FacturaService } from '../../services/factura.service';
 import { Factura } from 'src/app/shared/types/Factura';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-factura-new',
@@ -43,7 +36,9 @@ export class FacturaNewComponent implements OnInit {
   constructor(
     private readonly clientService: ClienteService,
     private readonly articulosService: ArticulosService,
-    private readonly facturaService: FacturaService
+    private readonly facturaService: FacturaService,
+    private readonly snackBar: MatSnackBar,
+    private readonly router: Router
   ) {}
 
   ngOnInit() {
@@ -148,13 +143,7 @@ export class FacturaNewComponent implements OnInit {
     this.selectedArticulos.splice(index, 1);
   }
 
-  setQty(qty: any) {
-    console.log(qty);
-  }
-
   crearFactura(): void {
-    console.log(this.clienteControl.getRawValue());
-
     const factura: Factura = {
       idCliente: this.clienteControl.getRawValue().idcliente,
       facturaArticulo: this.selectedArticulos.map((art) => ({
@@ -167,11 +156,15 @@ export class FacturaNewComponent implements OnInit {
           : undefined,
       generaRemito: !!this.generaRemito.value,
     };
-    console.log(factura);
 
     this.facturaService
       .create(factura)
-      .pipe(tap((resp) => console.log(resp)))
+      .pipe(
+        tap((resp) => {
+          this.snackBar.open(`Factura creada correctamente`);
+          this.router.navigate(['/factura']);
+        })
+      )
       .subscribe(noop);
   }
 }

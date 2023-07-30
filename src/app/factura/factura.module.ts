@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FileSaverModule } from 'ngx-filesaver';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [FacturaNewComponent, FacturaComponent],
@@ -27,6 +28,7 @@ import { FileSaverModule } from 'ngx-filesaver';
     ReactiveFormsModule,
     MatCheckboxModule,
     FileSaverModule,
+    MatSnackBarModule,
   ],
 })
 export class FacturaModule {}
