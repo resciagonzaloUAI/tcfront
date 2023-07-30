@@ -1,8 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  LOCALE_ID,
+  OnInit,
+} from '@angular/core';
 import { FacturaService } from '../services/factura.service';
-import { ActivatedRoute } from '@angular/router';
 import { noop, tap } from 'rxjs';
-
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
@@ -10,7 +15,7 @@ import { noop, tap } from 'rxjs';
 })
 export class FacturaComponent implements OnInit {
   facturas: any[] = [];
-  headers: Array<string> = ['Nro. Factura', 'Nro. Pedido', 'Precio'];
+  headers: Array<string> = ['Nro. Factura', 'Nro. Pedido', 'Precio', 'Fecha'];
   actions: Array<{ name: string; label: string }> = [
     { name: 'download', label: 'Descargar' },
   ];
@@ -18,7 +23,7 @@ export class FacturaComponent implements OnInit {
   constructor(
     private readonly facturaService: FacturaService,
     private readonly cd: ChangeDetectorRef,
-    private readonly route: ActivatedRoute
+    @Inject(LOCALE_ID) private locale: string
   ) {}
 
   ngOnInit(): void {
@@ -26,8 +31,6 @@ export class FacturaComponent implements OnInit {
   }
 
   getData(): void {
-    console.log('entro.,,,,,');
-
     this.facturaService
       .getAll()
       .pipe(
@@ -39,6 +42,11 @@ export class FacturaComponent implements OnInit {
               'Nro. Factura': fact.idbfactura,
               'Nro. Pedido': fact.idpedido,
               Precio: fact.precio,
+              Fecha: formatDate(
+                fact?.createdAt!,
+                'yyyy-MM-dd HH:mm',
+                this.locale
+              ),
             };
           });
           this.cd.detectChanges();
@@ -46,19 +54,12 @@ export class FacturaComponent implements OnInit {
       )
       .subscribe(noop);
   }
-  /*
+
   onTableAction({ name, row }: { name: string; row: any }) {
-    if (name === 'edit') {
-      // Handle edit
-    } else if (name === 'delete') {
-      this.articuloService
-        .delete(row['Nro. Articulo'])
-        .pipe(
-          tap(() => {
-            this.getData();
-          })
-        )
-        .subscribe(noop);
+    console.log('asd');
+
+    if (name === 'download') {
+      this.facturaService.download(row['Nro. Factura']).subscribe(noop);
     }
-  }*/
+  }
 }
