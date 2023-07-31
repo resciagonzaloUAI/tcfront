@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export abstract class BaseService<T> {
-  protected readonly API_SERVER = 'http://localhost:3000';
+  readonly API_SERVER = 'http://localhost:3003';
 
   protected constructor(
     protected http: HttpClient,

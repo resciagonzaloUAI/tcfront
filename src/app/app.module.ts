@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +24,8 @@ import { GenericFormComponent } from './shared/components/generic-form/component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FacturaModule } from './factura/factura.module';
 import { HomeComponent } from './home/components/home.component';
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,10 @@ import { HomeComponent } from './home/components/home.component';
     ReactiveFormsModule,
     FacturaModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    AuthGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
