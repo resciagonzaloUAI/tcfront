@@ -26,8 +26,6 @@ export class AlmacenComponent implements OnInit {
   }
 
   getData(): void {
-    console.log('entro.,,,,,');
-
     this.almacenService
       .getAll()
       .pipe(

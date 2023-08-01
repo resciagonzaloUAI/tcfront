@@ -24,6 +24,11 @@ export class AuthService extends BaseService<any> {
         tap((response: any) => {
           if (response && response.token) {
             localStorage.setItem('token', response.token);
+            const userRole = response.user.idRole;
+            localStorage.setItem('user_role', userRole);
+            console.log('control');
+            console.log(userRole);
+
             this.router.navigate(['/']);
             return true;
           }
@@ -58,5 +63,19 @@ export class AuthService extends BaseService<any> {
 
   isLoggedIn(): boolean {
     return !this.isTokenExpired();
+  }
+
+  isAdminLogguedIn(): number {
+    const userRole = Number(localStorage.getItem('user_role'));
+    console.log(userRole);
+
+    // Assuming 'user_role' is a number and you want to check if it's greater than 0
+    if (userRole === 1) {
+      console.log('Admin');
+      return 1; // Return 1 for admin
+    } else {
+      console.log('Comun');
+      return 0; // Return 0 for non-admin
+    }
   }
 }

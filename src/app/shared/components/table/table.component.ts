@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-table',
@@ -15,6 +16,7 @@ export class TableComponent implements OnInit {
   searchTerm: any;
   name: any;
   searchControl = new FormControl();
+  authService: any;
 
   ngOnInit(): void {
     console.log(this.data);
@@ -24,6 +26,9 @@ export class TableComponent implements OnInit {
 
   get displayedColumns() {
     return [...this.headers, 'actions'];
+  }
+  get isLogguedIn() {
+    return this.authService.isLoggedIn();
   }
 
   actionClicked(name: string, row: any) {

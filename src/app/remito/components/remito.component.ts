@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { noop, tap } from 'rxjs';
 import { RemitoService } from '../services/remito.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-remito',
@@ -21,7 +22,8 @@ export class RemitoComponent implements OnInit {
   constructor(
     private readonly remitoService: RemitoService,
     private readonly cd: ChangeDetectorRef,
-    private readonly snackBar: MatSnackBar
+    private readonly snackBar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -47,19 +49,28 @@ export class RemitoComponent implements OnInit {
       .subscribe(noop);
   }
 
+  get isAdminLogguedIn() {
+    return this.authService.isAdminLogguedIn();
+  }
+
   onTableAction({ name, row }: { name: string; row: any }) {
-    if (name === 'cumplirRemitos') {
-      this.remitoService
-        .cumpleRemito(row['Nro. Remito'])
-        .pipe(
-          tap(() => {
-            this.snackBar.open(
-              `Remito: ${row['Nro. Remito']} cumplido correctamente`
-            );
-            this.getData();
-          })
-        )
-        .subscribe(noop);
+    this.isAdminLogguedIn;
+    if (this.isAdminLogguedIn === 1) {
+      if (name === 'cumplirRemitos') {
+        this.remitoService
+          .cumpleRemito(row['Nro. Remito'])
+          .pipe(
+            tap(() => {
+              this.snackBar.open(
+                `Remito: ${row['Nro. Remito']} cumplido correctamente`
+              );
+              this.getData();
+            })
+          )
+          .subscribe(noop);
+      }
+    } else {
+      this.snackBar.open(`Su usuario no tiene permisos para esta operación`);
     }
   }
 }
