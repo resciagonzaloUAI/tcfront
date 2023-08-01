@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotaPedidoComponent } from './nota-pedido/components/nota-pedido.component';
-import { TableComponent } from './shared/components/table/table.component';
 import { AlmacenComponent } from './almacen/components/almacen.component';
 import { ArticulosComponent } from './articulos/components/articulos.component';
 import { ClienteComponent } from './cliente/components/cliente.component';
@@ -20,17 +19,16 @@ import { MatMenuModule } from '@angular/material/menu';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { GenericFormComponent } from './shared/components/generic-form/components/generic-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FacturaModule } from './factura/factura.module';
 import { HomeComponent } from './home/components/home.component';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { NotaPedidoModule } from './nota-pedido/nota-pedido.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotaPedidoComponent,
     AlmacenComponent,
     ArticulosComponent,
     ClienteComponent,
@@ -54,6 +52,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
     FormsModule,
     ReactiveFormsModule,
     FacturaModule,
+    NotaPedidoModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -33,8 +33,6 @@ export class TableComponent implements OnInit {
   search(): void {
     this.searchTerm = this.searchControl.value;
     if (this.searchTerm) {
-      console.log('Datos');
-
       this.data = this.originalData.filter((item) =>
         // Replace 'property' with the name of the property you want to search by
         item.property.toLowerCase().includes(this.searchTerm.toLowerCase())

@@ -1,18 +1,40 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NotaPedidoService } from '../services/nota-pedido.service';
+import { noop, tap } from 'rxjs';
 
 @Component({
   selector: 'app-nota-pedido',
   templateUrl: './nota-pedido.component.html',
   styleUrls: ['./nota-pedido.component.scss'],
 })
-export class NotaPedidoComponent {
-  formFields = [
-    { name: 'name', label: 'Name', type: 'text', required: true },
-    { name: 'email', label: 'Email', type: 'email', required: true },
-    { name: 'phone', label: 'Phone', type: 'text', required: false },
-  ];
+export class NotaPedidoComponent implements OnInit {
+  notaspedidos: any[] = [];
+  headers: Array<string> = ['Nro. NP', 'Id Art.', 'Cantidad'];
 
-  handleFormData(formData: any) {
-    console.log(formData);
+  constructor(
+    private readonly notapedidoService: NotaPedidoService,
+    private readonly cd: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.getData();
+  }
+
+  getData(): void {
+    this.notapedidoService
+      .getAll()
+      .pipe(
+        tap((notaspedidos) => {
+          this.notaspedidos = notaspedidos.map((np) => {
+            return {
+              'Nro. NP': np.idnotped,
+              'Id Art.': np.idArt,
+              Cantidad: np.cantidadArt,
+            };
+          });
+          this.cd.detectChanges();
+        })
+      )
+      .subscribe(noop);
   }
 }

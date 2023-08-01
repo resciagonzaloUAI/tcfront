@@ -9,4 +9,5 @@ export interface Factura {
   generaRemito?: boolean;
   facturaArticulo?: FacturaArticulo[];
   createdAt?: Date;
+  idAlm?: number;
 }

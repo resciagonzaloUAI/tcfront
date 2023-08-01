@@ -7,6 +7,6 @@ import { BaseService } from 'src/app/shared/services/base.service';
 })
 export class NotaPedidoService extends BaseService<any> {
   constructor(httpClient: HttpClient) {
-    super(httpClient, 'almacen');
+    super(httpClient, 'nota-pedido');
   }
 }

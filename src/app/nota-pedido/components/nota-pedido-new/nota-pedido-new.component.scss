@@ -1,0 +1,61 @@
+/*.factura-container {
+  display: flex;
+  align-items: center;
+  padding: 5%;
+  border: solid 1px black;
+  margin-top: 5%;
+  width: 80%;
+  margin-left: 5%;
+}*/
+
+.factura-container {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.form-item-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.botonAgregar {
+  margin-left: 20px;
+}
+
+.example-full-width {
+  width: 100%;
+  margin: 15px 0;
+}
+
+.example-margin {
+  margin: 20px 0;
+}
+
+mat-checkbox {
+  margin: 5px 0;
+}
+
+button {
+  margin: 10px 0;
+  color: white;
+  background-color: #3f51b5;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #303f9f;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  color: red;
+  margin-left: 5px;
+}

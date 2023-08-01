@@ -15,10 +15,7 @@
         <button mat-menu-item routerLink="/nota-pedido/new">Crear NP</button>
         <button mat-menu-item routerLink="/nota-pedido">Ver Listado NP</button>
       </mat-menu>
-      <button mat-button [matMenuTriggerFor]="remsMenu">Remito</button>
-      <mat-menu #remsMenu="matMenu">
-        <button mat-menu-item routerLink="/remito">Ver Remitos</button>
-      </mat-menu>
+      <button mat-button routerLink="/remito">Remito</button>
       <button mat-button [matMenuTriggerFor]="stockMenu">Stock</button>
       <mat-menu #stockMenu="matMenu">
         <button mat-menu-item routerLink="/almacen">Ver Stock</button>

@@ -28,21 +28,6 @@
       </span>
     </div>
     <div>
-      <mat-checkbox class="example-margin" [formControl]="notaPedido">
-        ¿Viene de nota de pedido?
-      </mat-checkbox>
-      <mat-form-field class="example-full-width">
-        <mat-label>Nro. Nota de Pedido</mat-label>
-        <input
-          type="number"
-          matInput
-          placeholder="Nro. Nota de Pedido"
-          [formControl]="notaPedidoNro"
-          [disabled]="!notaPedido.value"
-        />
-      </mat-form-field>
-    </div>
-    <div>
       <div class="form-item-group">
         <mat-form-field class="example-full-width">
           <mat-label>Productos</mat-label>
@@ -88,13 +73,7 @@
         </div>
       </div>
     </div>
-    <div>
-      <mat-checkbox class="example-margin" [formControl]="generaRemito">
-        ¿Desea generar un remito?
-      </mat-checkbox>
-    </div>
-    <div class="form-button-group">
-      <button mat-button (click)="crearFactura()">Crear Factura</button>
-    </div>
+    <div class="form-button-group"></div>
+    <button mat-button (click)="crearNotaPedido()">Crear Nota Pedido</button>
   </form>
 </div>

@@ -1,25 +1,22 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, noop, of } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 import { ClienteService } from 'src/app/cliente/services/cliente.service';
 import { ArticulosService } from 'src/app/articulos/services/articulos.service';
-import { FacturaService } from '../../services/factura.service';
-import { Factura } from 'src/app/shared/types/Factura';
+import { NotaPedidoService } from '../../services/nota-pedido.service';
+import { NotaPedido } from 'src/app/shared/types/NotaPedido';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { StockService } from 'src/app/stock/services/stock.service';
-import { Stock } from 'src/app/shared/types/Stock';
 
 @Component({
-  selector: 'app-factura-new',
-  templateUrl: './factura-new.component.html',
-  styleUrls: ['./factura-new.component.scss'],
+  selector: 'app-nota-pedido-new',
+  templateUrl: './nota-pedido-new.component.html',
+  styleUrls: ['./nota-pedido-new.component.scss'],
 })
-export class FacturaNewComponent implements OnInit {
+export class NotaPedidoNewComponent implements OnInit {
   clienteControl = new FormControl<string | any>('');
-  almacenControl = new FormControl<string | any>('');
   articuloControl = new FormControl<string | any>('');
   notaPedido = new FormControl<boolean>(false);
   generaRemito = new FormControl<boolean>(false);
@@ -28,7 +25,6 @@ export class FacturaNewComponent implements OnInit {
     disabled: true,
   });
   artQty = new FormControl<string | any>('');
-  options: any[] = [{ name: 'Mary' }, { name: 'Shelley' }, { name: 'Igor' }];
   filteredClientes: Observable<any[]> = of([]);
   filteredArticulos: Observable<any[]> = of([]);
   form = new FormGroup({});
@@ -37,39 +33,18 @@ export class FacturaNewComponent implements OnInit {
   selectedCliente: any = null;
   tempSelectedArticulo: any = null;
   selectedArticulos: any[] = [];
-  tempSelectedArticuloC: any[] = [];
-  stockData: any = null;
-  idArt: any;
-  cantidad: any;
-  idArtArray: any;
-  cantArray: any;
+  stockArticulo: any = null;
   stock2: any = null;
-  stockArticulo: any;
-  stock: any;
-  idAlm: number = 1;
-
   constructor(
     private readonly clientService: ClienteService,
     private readonly articulosService: ArticulosService,
-    private readonly facturaService: FacturaService,
+    private readonly notapedidoService: NotaPedidoService,
     private readonly snackBar: MatSnackBar,
     private readonly router: Router,
     private readonly stockService: StockService
   ) {}
 
   ngOnInit() {
-    this.notaPedido.valueChanges
-      .pipe(
-        tap((value) => {
-          if (value) {
-            this.notaPedidoNro.enable();
-          } else {
-            this.notaPedidoNro.disable();
-          }
-        })
-      )
-      .subscribe(noop);
-
     this.clientService
       .getAll()
       .pipe(
@@ -117,8 +92,6 @@ export class FacturaNewComponent implements OnInit {
   }
 
   displayFnArticulos(articulo: any): string {
-    console.log(articulo);
-
     return articulo && articulo.nombreArt ? articulo.nombreArt : '';
   }
 
@@ -191,7 +164,7 @@ export class FacturaNewComponent implements OnInit {
             this.stockArticulo = null;
             this.stock2 = null;
           },
-          (error) => {
+          (error: any) => {
             // Handle the error here (e.g., show an error message)
             console.error(`Error fetching stock for article ${idArt}:`, error);
           }
@@ -206,6 +179,7 @@ export class FacturaNewComponent implements OnInit {
   addArticulo() {
     this.validaStock();
     this.tempSelectedArticulo = null;
+    console.log(this.selectedArticulos);
   }
 
   deleteArticulo(articulo: any) {
@@ -213,31 +187,27 @@ export class FacturaNewComponent implements OnInit {
     this.selectedArticulos.splice(index, 1);
   }
 
-  crearFactura(): void {
-    idAlm: 1;
-    console.log(this.idAlm);
-
-    const factura: Factura = {
+  crearNotaPedido(): void {
+    const notapedido: NotaPedido = {
       idCliente: this.clienteControl.getRawValue().idcliente,
-      facturaArticulo: this.selectedArticulos.map((art) => ({
+      notapedidoArticulo: this.selectedArticulos.map((art) => ({
         idArticulo: art.articulo.idArt,
         cantidad: art.cantidad,
       })),
-      idpedido:
-        this.notaPedido.value && this.notaPedidoNro.value
-          ? this.notaPedidoNro.value
-          : undefined,
-      generaRemito: !!this.generaRemito.value,
     };
 
-    this.facturaService
-      .create(factura)
+    this.notapedidoService
+      .create(notapedido)
       .pipe(
         tap((resp) => {
-          this.snackBar.open(`Factura creada correctamente`);
-          this.router.navigate(['/factura']);
+          const message = 'Nota de pedido creada correctamente';
+          this.snackBar.open(message, 'Cerrar', {
+            duration: 2000,
+          });
+          this.router.navigate(['/nota-pedido']);
         })
       )
       .subscribe(noop);
+    console.log(notapedido);
   }
 }

@@ -12,7 +12,7 @@ export class RemitoComponent implements OnInit {
   remitos: any[] = [];
   headers: Array<string> = ['Nro. Remito', 'Nro. Factura', 'Importe', 'Estado'];
   actions: Array<{ name: string; label: string }> = [
-    { name: 'cumplirRemitos', label: 'Cumplir Remitos' },
+    { name: 'cumplirRemitos', label: 'Cumplir Remito' },
   ];
   idcfactura: string | null = null;
   importeFinal: string | null = null;
