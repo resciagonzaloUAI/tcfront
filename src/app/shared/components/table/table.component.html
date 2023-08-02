@@ -1,4 +1,15 @@
-<table mat-table [dataSource]="data" class="mat-elevation-z8">
+<mat-form-field class="search-bar">
+  <input
+    matInput
+    [formControl]="searchControl"
+    (keyup.enter)="search()"
+    placeholder="Filtrar por nombre"
+  />
+</mat-form-field>
+<button mat-button color="primary" class="botonBusqueda" (click)="search()">
+  Buscar
+</button>
+<table mat-table [dataSource]="filteredData" class="mat-elevation-z8">
   <!-- Define Columns -->
   <ng-container *ngFor="let header of headers" [matColumnDef]="header">
     <th mat-header-cell *matHeaderCellDef>{{ header }}</th>

@@ -1,17 +1,57 @@
+/* table.component.css */
+
+/* Style the table */
 table {
   width: 100%;
   margin-bottom: 50px;
 }
 
+/* Style the search container */
 .search-container {
   display: flex;
+  align-items: center;
   margin: 15px;
   width: 100%;
-  margin-bottom: 20px; /* Adjust as needed */
+  margin-bottom: 20px;
 }
 
+/* Style the search input field */
 .busqueda {
   margin-right: 15px;
   border: 2px solid #333;
   border-radius: 5px;
+  padding: 8px;
+  font-size: 14px;
+  margin: 5px;
+}
+
+/* Style the "Search" button */
+.search-button {
+  height: 36px;
+}
+
+.botonBusqueda {
+  border: 2px solid #333;
+  margin-left: 15px;
+}
+
+/* Style the action buttons in the actions column */
+td mat-cell button {
+  margin-right: 5px;
+}
+
+/* Style the table header row */
+tr.mat-header-row {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+/* Style the table rows */
+tr.mat-row {
+  background-color: #fff;
+}
+
+/* Style the odd table rows */
+tr.mat-row.mat-row:hover {
+  background-color: #f9f9f9;
 }

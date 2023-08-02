@@ -1,6 +1,15 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SharedModule } from '../../shared.module';
 
 @Component({
   selector: 'app-table',
@@ -9,20 +18,25 @@ import { AuthService } from '../../services/auth.service';
 })
 export class TableComponent implements OnInit {
   @Input() headers: string[] = [];
-  @Input() data: any[] = [];
+  @Input() filteredData: any[] = [];
   @Input() actions: { name: string; label: string }[] = [];
   @Output() action = new EventEmitter<{ name: string; row: any }>();
-  originalData: any[] = [];
+  @Input() data: any[] = [];
   searchTerm: any;
   name: any;
   searchControl = new FormControl();
   authService: any;
+  estado: any[] = [];
+
+  constructor(private readonly cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    console.log(this.data);
+    this.filteredData = this.data;
   }
 
-  ngOnChanges(): void {}
+  ngOnChanges(): void {
+    this.filteredData = this.data;
+  }
 
   get displayedColumns() {
     return [...this.headers, 'actions'];
@@ -34,7 +48,63 @@ export class TableComponent implements OnInit {
   actionClicked(name: string, row: any) {
     this.action.emit({ name, row });
   }
+  search(): void {
+    this.searchTerm = this.searchControl.value;
 
+    if (this.searchTerm) {
+      console.log('Search Term:', this.searchTerm);
+
+      this.filteredData = this.data.filter((item) =>
+        this.isItemMatchingSearchTerm(item, this.searchTerm)
+      );
+      console.log(this.filteredData);
+      this.cd.detectChanges();
+    } else {
+      // If search term is empty, display all data
+      this.filteredData = this.data;
+    }
+  }
+
+  isItemMatchingSearchTerm(item: any, searchTerm: string): boolean {
+    this.filteredData = [];
+    // Iterate through all properties of the item
+    for (const property in item) {
+      if (item.hasOwnProperty(property)) {
+        const propertyValue = item[property];
+        if (
+          propertyValue &&
+          String(propertyValue).toLowerCase().includes(searchTerm.toLowerCase())
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /* 
+  search(): void {
+    this.searchTerm = this.searchControl.value;
+
+    if (this.searchTerm) {
+      console.log('va searchTerm', this.searchTerm);
+
+      this.filteredData = this.data.filter(
+        (item) =>
+          // Replace 'property' with the actual property name you want to use for filtering
+          // Example: item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+          item.estado &&
+          item.estado.toLowerCase().includes(this.searchTerm.toLowerCase())
+        // item.property.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      console.log('Vacio');
+
+      // If search term is empty, display all data
+      this.data;
+    }
+  }
+  
   search(): void {
     this.searchTerm = this.searchControl.value;
     if (this.searchTerm) {
@@ -46,5 +116,5 @@ export class TableComponent implements OnInit {
       console.log('Vacio');
       // If search term is empty, display all data
     }
-  }
+  }*/
 }

@@ -22,16 +22,18 @@ export class NotaPedidoComponent implements OnInit {
 
   getData(): void {
     this.notapedidoService
-      .getAll()
+      .getArticulosByNotaPedido()
       .pipe(
         tap((notaspedidos) => {
           this.notaspedidos = notaspedidos.map((np) => {
             return {
               'Nro. NP': np.idnotped,
-              'Id Art.': np.idArt,
-              Cantidad: np.cantidadArt,
+              'Id Art.': np.idArticulo,
+              Cantidad: np.cantidad,
             };
           });
+          console.log(notaspedidos);
+
           this.cd.detectChanges();
         })
       )

@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { noop, tap } from 'rxjs';
+import { map, noop, tap } from 'rxjs';
 import { RemitoService } from '../services/remito.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { Remito } from 'src/app/shared/types/Remito';
 
 @Component({
   selector: 'app-remito',
@@ -34,8 +35,11 @@ export class RemitoComponent implements OnInit {
     this.remitoService
       .getAll()
       .pipe(
-        tap((remitos) => {
-          this.remitos = remitos.map((rem) => {
+        map((remitos: Remito[]) =>
+          remitos.filter((rem: Remito) => rem.estado === 'PENDIENTE')
+        ),
+        tap((filteredRemitos: Remito[]) => {
+          this.remitos = filteredRemitos.map((rem) => {
             return {
               'Nro. Remito': rem.idremito,
               'Nro. Factura': rem.idcfactura,
