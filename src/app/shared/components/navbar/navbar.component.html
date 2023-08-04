@@ -33,6 +33,19 @@
         <button mat-menu-item routerLink="/cliente">Listado Clientes</button>
         <button mat-menu-item routerLink="/cliente">Editar Cliente</button>
       </mat-menu>
+      <button mat-button routerLink="/proveedores">Proveedores</button>
+      <button mat-button [matMenuTriggerFor]="ocMenu">Orden de Compra</button>
+      <mat-menu #ocMenu="matMenu">
+        <button mat-menu-item routerLink="/proveedores">
+          Crear orden de compra
+        </button>
+        <button mat-menu-item routerLink="/proveedores">
+          Confirmar orden de compra
+        </button>
+        <button mat-menu-item routerLink="/proveedores">
+          Listado orden de compra
+        </button>
+      </mat-menu>
       <button mat-button (click)="logout()">Salir</button>
     </ng-container>
     <button *ngIf="!isLogguedIn" mat-button routerLink="/login">

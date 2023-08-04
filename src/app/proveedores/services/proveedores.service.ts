@@ -8,10 +8,15 @@ import { Observable } from 'rxjs';
 })
 export class ProveedoresService extends BaseService<any> {
   constructor(httpClient: HttpClient) {
-    super(httpClient, 'proveedores');
+    super(httpClient, 'proveedor');
   }
 
   uploadArticles(formData: any): Observable<any> {
-    return this.http.post(`${this.API_SERVER}/${this.apiUrl}`, formData);
+    console.log(formData);
+
+    return this.http.post(
+      `${this.API_SERVER}/${this.endpoint}/upload-articles/1`,
+      formData
+    );
   }
 }
