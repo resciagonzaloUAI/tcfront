@@ -42,6 +42,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'proveedores',
+    loadChildren: () =>
+      import('./proveedores/proveedores.module').then(
+        (m) => m.ProveedoresModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
