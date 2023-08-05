@@ -25,6 +25,7 @@ import { HomeComponent } from './home/components/home.component';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NotaPedidoModule } from './nota-pedido/nota-pedido.module';
+import { OrdenCompraModule } from './orden-compra/orden-compra.module';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { NotaPedidoModule } from './nota-pedido/nota-pedido.module';
     ReactiveFormsModule,
     FacturaModule,
     NotaPedidoModule,
+    OrdenCompraModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

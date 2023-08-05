@@ -50,6 +50,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'orden-compra',
+    loadChildren: () =>
+      import('./orden-compra/orden-compra.module').then(
+        (m) => m.OrdenCompraModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),

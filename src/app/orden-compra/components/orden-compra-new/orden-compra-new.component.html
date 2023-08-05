@@ -1,0 +1,79 @@
+<div class="w-full flex items-center pt-10 factura-container">
+  <form [formGroup]="form">
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Proveedor</mat-label>
+        <input
+          type="text"
+          matInput
+          [formControl]="provControl"
+          [matAutocomplete]="proveedores"
+        />
+        <mat-autocomplete
+          #proveedores="matAutocomplete"
+          [displayWith]="displayFnProveedores"
+          (optionSelected)="handleSelectProv($event)"
+        >
+          <mat-option
+            *ngFor="let proveedor of filteredProvs | async"
+            [value]="proveedor"
+          >
+            {{ proveedor.nombre }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <span *ngIf="selectedProvs">
+        {{ selectedProvs.nombre }}
+        <span (click)="selectedProvs = null" class="cursor-pointer">X</span>
+      </span>
+    </div>
+    <div>
+      <div class="form-item-group">
+        <mat-form-field class="example-full-width">
+          <mat-label>Productos</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="articuloControl"
+            [matAutocomplete]="articulo"
+          />
+          <mat-autocomplete
+            #articulo="matAutocomplete"
+            [displayWith]="displayFnArticulos"
+            (optionSelected)="handleSelectArticulo($event)"
+          >
+            <mat-option
+              *ngFor="let art of filteredArticulos | async"
+              [value]="art"
+            >
+              {{ art.nombreArt }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Cantidad</mat-label>
+          <input
+            type="number"
+            matInput
+            placeholder="Cantidad"
+            [formControl]="artQty"
+          />
+        </mat-form-field>
+        <button mat-button (click)="addArticulo()">Agregar</button>
+      </div>
+
+      <div>
+        <div *ngIf="selectedArticulos.length > 0">
+          <span *ngFor="let selection of selectedArticulos"
+            >{{ selection.articulo.nombreArt + " - " + selection.cantidad
+            }}<span (click)="deleteArticulo(articulo)" class="cursor-pointer">
+              X</span
+            ></span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="form-button-group"></div>
+    <button mat-button (click)="crearOrdenCompra()">Crear Nota Pedido</button>
+  </form>
+</div>

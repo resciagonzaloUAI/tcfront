@@ -1,5 +1,5 @@
 export interface Articulo {
-  idArt: number;
+  idArt?: number;
   nombreArt?: string;
   precioArt?: string;
   isActive?: boolean;
