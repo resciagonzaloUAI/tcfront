@@ -9,7 +9,7 @@ import { NotaPedidoArticulo } from 'src/app/shared/types/NotaPedidoArticulo';
 })
 export class OrdenCompraService extends BaseService<any> {
   constructor(httpClient: HttpClient) {
-    super(httpClient, 'orden-cp,[ra');
+    super(httpClient, 'orden-compra');
   }
 
   getArticulosByNotaPedido(params?: any): Observable<NotaPedidoArticulo[]> {
@@ -19,5 +19,25 @@ export class OrdenCompraService extends BaseService<any> {
         params,
       }
     );
+  }
+
+  uploadRespuesta(formData: any, idOrdenCompra: number): Observable<any> {
+    console.log('entro');
+
+    return this.http.post(
+      `${this.API_SERVER}/${this.endpoint}/respuesta/${idOrdenCompra}`,
+      formData
+    );
+  }
+
+  confirmarOrdenCompra(
+    idOrdenCompra: number,
+    confirm: boolean
+  ): Observable<any> {
+    const req = {
+      confirm,
+      idOrdenCompra,
+    };
+    return this.http.patch(`${this.API_SERVER}/${this.endpoint}`, req);
   }
 }

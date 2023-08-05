@@ -39,7 +39,9 @@ export class TableComponent implements OnInit {
   }
 
   get displayedColumns() {
-    return [...this.headers, 'actions'];
+    const displayedColumns = [...this.headers];
+    if (this.actions.length > 0) displayedColumns.push('actions');
+    return displayedColumns;
   }
   get isLogguedIn() {
     return this.authService.isLoggedIn();
@@ -82,7 +84,7 @@ export class TableComponent implements OnInit {
     return false;
   }
 
-  /* 
+  /*
   search(): void {
     this.searchTerm = this.searchControl.value;
 
@@ -104,7 +106,7 @@ export class TableComponent implements OnInit {
       this.data;
     }
   }
-  
+
   search(): void {
     this.searchTerm = this.searchControl.value;
     if (this.searchTerm) {

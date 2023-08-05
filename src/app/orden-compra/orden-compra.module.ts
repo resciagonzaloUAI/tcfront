@@ -11,9 +11,16 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SharedModule } from '../shared/shared.module';
+import { OrdenCompraRespuestaComponent } from './components/orden-compra-respuesta/orden-compra-respuesta.component';
+import { OrdenCompraComfirmarComponent } from './components/orden-compra-confirmar/orden-compra-confirmar.component';
 
 @NgModule({
-  declarations: [OrdenCompraNewComponent, OrdenCompraComponent],
+  declarations: [
+    OrdenCompraNewComponent,
+    OrdenCompraComponent,
+    OrdenCompraRespuestaComponent,
+    OrdenCompraComfirmarComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,

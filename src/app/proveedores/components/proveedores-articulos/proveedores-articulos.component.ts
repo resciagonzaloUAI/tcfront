@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, noop, of } from 'rxjs';
-import { map, startWith, tap } from 'rxjs/operators';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { ClienteService } from 'src/app/cliente/services/cliente.service';
 import { ArticulosService } from 'src/app/articulos/services/articulos.service';
 import { ProveedoresService } from '../../services/proveedores.service';
 import { NotaPedido } from 'src/app/shared/types/NotaPedido';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StockService } from 'src/app/stock/services/stock.service';
 
 @Component({
@@ -15,9 +15,23 @@ import { StockService } from 'src/app/stock/services/stock.service';
   templateUrl: './proveedores-articulos.component.html',
   styleUrls: ['./proveedores-articulos.component.scss'],
 })
-export class ProveedoresArticulosComponent {
-  constructor(private readonly proveedoresService: ProveedoresService) {}
+export class ProveedoresArticulosComponent implements OnInit {
+  constructor(
+    private readonly proveedoresService: ProveedoresService,
+    private readonly route: ActivatedRoute
+  ) {}
   fileToUpload: File | null = null;
+  idProveedor: number | undefined;
+
+  ngOnInit(): void {
+    this.route.queryParamMap
+      .pipe(
+        tap((query): void => {
+          this.idProveedor = +query.get('idProveedor')!;
+        })
+      )
+      .subscribe(noop);
+  }
 
   onFileChange(event: Event) {
     const element = event.currentTarget as HTMLInputElement;
@@ -32,7 +46,7 @@ export class ProveedoresArticulosComponent {
     formData.append('file', this.fileToUpload!, this.fileToUpload?.name);
 
     this.proveedoresService
-      .uploadArticles(formData)
+      .uploadArticles(formData, this.idProveedor!)
       .pipe(tap((res) => console.log(res)))
       .subscribe(noop);
   }

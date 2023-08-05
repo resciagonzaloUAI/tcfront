@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ProveedoresService } from '../services/proveedores.service';
 import { noop, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nota-pedido',
@@ -10,10 +11,14 @@ import { noop, tap } from 'rxjs';
 export class ProveedoresComponent implements OnInit {
   proveedores: any[] = [];
   headers: Array<string> = ['Id', 'Nombre'];
+  actions: Array<{ name: string; label: string }> = [
+    { name: 'upload', label: 'Cargar Articulos' },
+  ];
 
   constructor(
     private readonly proveedoresService: ProveedoresService,
-    private readonly cd: ChangeDetectorRef
+    private readonly cd: ChangeDetectorRef,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -35,5 +40,15 @@ export class ProveedoresComponent implements OnInit {
         })
       )
       .subscribe(noop);
+  }
+
+  onTableAction({ name, row }: { name: string; row: any }) {
+    console.log(row);
+
+    if (name === 'upload') {
+      this.router.navigate(['/proveedores/articulos'], {
+        queryParams: { idProveedor: row.Id },
+      });
+    }
   }
 }

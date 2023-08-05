@@ -1,16 +1,19 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { OrdenCompraService } from '../services/orden-compra.service';
+import { OrdenCompraService } from '../../services/orden-compra.service';
 import { noop, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orden-compra',
-  templateUrl: './orden-compra.component.html',
-  styleUrls: ['./orden-compra.component.scss'],
+  templateUrl: './orden-compra-confirmar.component.html',
+  styleUrls: ['./orden-compra-confirmar.component.scss'],
 })
-export class OrdenCompraComponent implements OnInit {
+export class OrdenCompraComfirmarComponent implements OnInit {
   ordenescompra: any[] = [];
-  headers: Array<string> = ['Id', 'Proveedor', 'Precio', 'Estado'];
+  headers: Array<string> = ['Id', 'Proveedor', 'Precio'];
+  actions: Array<{ name: string; label: string }> = [
+    { name: 'upload', label: 'Cargar Respuesta Proveedor' },
+  ];
 
   constructor(
     private readonly ordencompraService: OrdenCompraService,
@@ -24,7 +27,7 @@ export class OrdenCompraComponent implements OnInit {
 
   getData(): void {
     this.ordencompraService
-      .getAll()
+      .getAll({ estado: 'PENDIENTE' })
       .pipe(
         tap((ordenescompra) => {
           this.ordenescompra = ordenescompra.map((oc) => {
@@ -32,7 +35,6 @@ export class OrdenCompraComponent implements OnInit {
               Id: oc.id,
               Proveedor: oc.proveedor.nombre,
               Precio: oc.precio,
-              Estado: oc.estado,
             };
           });
           console.log(ordenescompra);
@@ -41,5 +43,13 @@ export class OrdenCompraComponent implements OnInit {
         })
       )
       .subscribe(noop);
+  }
+
+  onTableAction({ name, row }: { name: string; row: any }) {
+    if (name === 'upload') {
+      this.router.navigate(['/orden-compra/respuesta'], {
+        queryParams: { idOrdenCompra: row.Id },
+      });
+    }
   }
 }

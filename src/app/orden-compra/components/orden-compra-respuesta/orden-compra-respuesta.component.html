@@ -1,0 +1,24 @@
+<div *ngIf="!submitted; else respuesta">
+  <div>
+    <input type="file" (change)="onFileChange($event)" #fileInput />
+    <button (click)="onSubmit()">Upload File</button>
+  </div>
+</div>
+
+<ng-template #respuesta>
+  <div *ngIf="diferencias.length > 0; else noDiferencias">
+    <app-table [headers]="headers" [data]="diferencias"></app-table>
+  </div>
+  <ng-template #noDiferencias>
+    <p>La orden de compra no contiene diferencias</p>
+  </ng-template>
+
+  <div>
+    <p *ngIf="diferencias.length > 0">
+      Existen diferencias entre las cantiadades pedidas y las disponibles en el
+      proveedor. Desea confirmar la orden de compra?
+    </p>
+    <button (click)="confirmarOrdenCompra(false)">Cancelar</button>
+    <button (click)="confirmarOrdenCompra(true)">Confirmar</button>
+  </div>
+</ng-template>

@@ -13,7 +13,7 @@ export class ArticulosService extends BaseService<any> {
   }
   getAllByProvs(providerId: string): Observable<Articulo[]> {
     return this.http.get<Articulo[]>(
-      `${this.API_SERVER}/${this.endpoint}/${providerId}`
+      `${this.API_SERVER}/${this.endpoint}/proveedor/${providerId}`
     );
   }
 }

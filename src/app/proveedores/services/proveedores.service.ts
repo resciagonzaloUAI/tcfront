@@ -11,11 +11,11 @@ export class ProveedoresService extends BaseService<any> {
     super(httpClient, 'proveedor');
   }
 
-  uploadArticles(formData: any): Observable<any> {
+  uploadArticles(formData: any, idProveedor: number): Observable<any> {
     console.log(formData);
 
     return this.http.post(
-      `${this.API_SERVER}/${this.endpoint}/upload-articles/1`,
+      `${this.API_SERVER}/${this.endpoint}/upload-articles/${idProveedor}`,
       formData
     );
   }

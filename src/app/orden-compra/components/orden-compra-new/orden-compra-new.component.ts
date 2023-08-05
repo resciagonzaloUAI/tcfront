@@ -50,21 +50,26 @@ export class OrdenCompraNewComponent implements OnInit {
       )
       .subscribe(noop);
 
-    console.log(this.proveedores);
-    console.log('array de proveedores', this.proveedores[0]);
-
-    this.articulosService
-
-      .getAll()
+    this.provControl.valueChanges
       .pipe(
-        tap((articulos) => {
-          this.articulos = articulos;
+        map((value) => {
+          console.log(value);
+
+          if (value?.id) {
+            this.articulosService
+              .getAllByProvs(value.id)
+              .pipe(
+                tap((articulos) => {
+                  console.log(articulos);
+
+                  this.articulos = articulos;
+                })
+              )
+              .subscribe(noop);
+          }
         })
       )
       .subscribe(noop);
-    console.log(this.articulos);
-
-    console.log('paso de largo el pipe');
 
     this.filteredProvs = this.provControl.valueChanges.pipe(
       startWith(''),
@@ -194,8 +199,10 @@ export class OrdenCompraNewComponent implements OnInit {
   }
 
   crearOrdenCompra(): void {
+    console.log(this.provControl.getRawValue());
+
     const ordenCompra: OrdenCompra = {
-      idProveedor: this.provControl.getRawValue().idProveedor,
+      idProveedor: this.provControl.getRawValue().id,
       ordenCompraArticulo: this.selectedArticulos.map((art) => ({
         idArticulo: art.articulo.idArt,
         cantidad: art.cantidad,
