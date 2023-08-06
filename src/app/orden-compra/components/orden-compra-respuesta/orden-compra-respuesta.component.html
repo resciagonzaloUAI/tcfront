@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<ng-template #respuesta>
+<ng-template #respuesta class="respuesta">
   <div *ngIf="diferencias.length > 0; else noDiferencias">
     <app-table [headers]="headers" [data]="diferencias"></app-table>
   </div>
@@ -16,8 +16,9 @@
   <div>
     <p *ngIf="diferencias.length > 0">
       Existen diferencias entre las cantiadades pedidas y las disponibles en el
-      proveedor. Desea confirmar la orden de compra?
+      proveedor.
     </p>
+    <p>¿Desea confirmar la orden de compra?</p>
     <button (click)="confirmarOrdenCompra(false)">Cancelar</button>
     <button (click)="confirmarOrdenCompra(true)">Confirmar</button>
   </div>

@@ -1,44 +1,40 @@
-/*.factura-container {
+/* Existing table styles */
+/* ... */
+
+/* Existing styles for other components */
+/* ... */
+
+/* Style for the upload container */
+
+.respuesta {
+  width: 100%;
+}
+
+div {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 5%;
-  border: solid 1px black;
-  margin-top: 5%;
-  width: 80%;
-  margin-left: 5%;
-}*/
-
-.factura-container {
-  margin: 0 auto;
-  max-width: 600px;
+  justify-content: center;
+  margin: 50px auto; /* Adjust margins as needed */
 }
 
-.form-item-group {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 20px;
+form {
+  width: 100%;
+  max-width: 600px; /* Matching with your other styles */
+  text-align: center;
 }
 
-.botonAgregar {
-  margin-left: 20px;
-}
-
-.example-full-width {
+input[type="file"] {
   width: 100%;
   margin: 15px 0;
-}
-
-.example-margin {
-  margin: 20px 0;
-}
-
-mat-checkbox {
-  margin: 5px 0;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 14px;
 }
 
 button {
-  margin: 10px 0;
+  margin: 10px auto; /* Center the button */
   color: white;
   background-color: #3f51b5;
   border: none;
@@ -52,10 +48,4 @@ button {
 
 button:hover {
   background-color: #303f9f;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-  color: red;
-  margin-left: 5px;
 }

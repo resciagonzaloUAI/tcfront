@@ -18,7 +18,9 @@ import { StockService } from 'src/app/stock/services/stock.service';
 export class ProveedoresArticulosComponent implements OnInit {
   constructor(
     private readonly proveedoresService: ProveedoresService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar
   ) {}
   fileToUpload: File | null = null;
   idProveedor: number | undefined;
@@ -49,5 +51,10 @@ export class ProveedoresArticulosComponent implements OnInit {
       .uploadArticles(formData, this.idProveedor!)
       .pipe(tap((res) => console.log(res)))
       .subscribe(noop);
+    this.router.navigate(['/proveedores/']);
+    const messagge = 'Carga correcta';
+    this.snackBar.open(messagge, 'Cerrar', {
+      duration: 3500,
+    });
   }
 }

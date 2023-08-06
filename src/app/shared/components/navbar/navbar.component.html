@@ -33,15 +33,8 @@
         <button mat-menu-item routerLink="/cliente">Listado Clientes</button>
         <button mat-menu-item routerLink="/cliente">Editar Cliente</button>
       </mat-menu>
-      <button mat-button [matMenuTriggerFor]="pvMenu">Proveedores</button>
-      <mat-menu #pvMenu="matMenu">
-        <button mat-menu-item routerLink="/proveedores">
-          Listado proveedores
-        </button>
-        <button mat-menu-item routerLink="/proveedores/articulos">
-          Cargar nueva lista
-        </button>
-      </mat-menu>
+      <button mat-button routerLink="/proveedores">Proveedores</button>
+
       <button mat-button [matMenuTriggerFor]="ocMenu">Orden de Compra</button>
       <mat-menu #ocMenu="matMenu">
         <button mat-menu-item routerLink="/orden-compra/new">
