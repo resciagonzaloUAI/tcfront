@@ -22,12 +22,8 @@
           Listado Remitos
         </button>
       </mat-menu>
-      <button mat-button [matMenuTriggerFor]="stockMenu">Stock</button>
-      <mat-menu #stockMenu="matMenu">
-        <button mat-menu-item routerLink="/almacen">Ver Stock</button>
-        <button mat-menu-item routerLink="/almacen">Editar Stock</button>
-        <button mat-menu-item routerLink="/almacen">Confirmar Recepción</button>
-      </mat-menu>
+      <button mat-button routerLink="/almacen">Stock</button>
+
       <button mat-button [matMenuTriggerFor]="clientesMenu">Clientes</button>
       <mat-menu #clientesMenu="matMenu">
         <button mat-menu-item routerLink="/cliente">Listado Clientes</button>
