@@ -26,6 +26,7 @@ import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NotaPedidoModule } from './nota-pedido/nota-pedido.module';
 import { OrdenCompraModule } from './orden-compra/orden-compra.module';
+import { ReportesModule } from './reportes/reportes.module';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { OrdenCompraModule } from './orden-compra/orden-compra.module';
     FacturaModule,
     NotaPedidoModule,
     OrdenCompraModule,
+    ReportesModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

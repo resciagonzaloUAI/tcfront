@@ -12,10 +12,7 @@ import {
   styleUrls: ['./footer.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class FooterComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+export class FooterComponent {
   faFacebook = faFacebook;
   faTwitter = faTwitter;
   faInstagram = faInstagram;
