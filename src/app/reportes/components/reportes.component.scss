@@ -12,3 +12,17 @@
   width: 50% !important;
   padding-left: 25%;
 }
+
+/* Add the styles for the search container */
+.contenedorFiltro {
+  display: flex;
+  align-items: center;
+  margin: 15px;
+  width: 100%;
+}
+
+.botonAplicar {
+  border: 2px solid #333;
+  margin-left: 15px;
+  background-color: white;
+}

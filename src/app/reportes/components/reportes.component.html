@@ -1,3 +1,18 @@
+<div class="contenedorFiltro">
+  <mat-form-field appearance="fill">
+    <mat-label>Filter by Date</mat-label>
+    <mat-date-range-input>
+      <input
+        matStartDate
+        formControlName="startDate"
+        placeholder="Start date"
+      />
+      <input matEndDate formControlName="endDate" placeholder="End date" />
+    </mat-date-range-input>
+  </mat-form-field>
+  <button mat-raised-button class="botonAplicar">Apply</button>
+</div>
+
 <div class="padding-5">
   <mat-tab-group (selectedTabChange)="onTabChanged($event)">
     <mat-tab label="Productos">
@@ -10,7 +25,7 @@
           <thead>
             <tr>
               <th>Cliente</th>
-              <th>Gasto</th>
+              <th>Importe</th>
               <th>Color</th>
             </tr>
           </thead>

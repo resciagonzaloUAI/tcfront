@@ -14,6 +14,7 @@ import {
   LineElement,
   PointElement,
 } from 'chart.js';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import * as moment from 'moment';
 import 'chartjs-adapter-moment';
@@ -38,6 +39,9 @@ Chart.register(
   styleUrls: ['./reportes.component.scss'],
 })
 export class ReportesComponent implements OnInit {
+  dateRangeForm?: FormGroup;
+  originalProductsData: any[] = [];
+  filteredProductsData: any[] = [];
   mostSoldProductsChart: Chart | null = null;
   mostSoldClientsChart: Chart<
     keyof ChartTypeRegistry,
@@ -55,7 +59,8 @@ export class ReportesComponent implements OnInit {
 
   constructor(
     private readonly reportesService: ReportesService,
-    private readonly datePipe: DatePipe
+    private readonly datePipe: DatePipe,
+    private readonly formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -111,6 +116,93 @@ export class ReportesComponent implements OnInit {
     });
   }
 
+  /*
+  loadProductsChart(): void {
+    this.reportesService.getMostSoldProducts().subscribe((data: any) => {
+      if (this.mostSoldProductsChart) {
+        this.mostSoldProductsChart.destroy();
+        this.mostSoldProductsChart = null;
+      }
+
+      this.originalProductsData = data; // Store the original data
+
+      const products = data.map(
+        (p: { nombreArticulo: string }) => p.nombreArticulo
+      );
+      const quantities = data.map(
+        (p: { totalQuantity: any }) => p.totalQuantity
+      );
+
+      this.mostSoldProductsChart = new Chart('mostSoldProductsCanvas', {
+        type: 'bar',
+        data: {
+          labels: products,
+          datasets: [
+            {
+              data: quantities,
+              label: 'Productos más vendidos',
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Cantidad',
+              },
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Producto',
+              },
+            },
+          },
+        },
+      });
+    });
+  }
+
+  applyDateFilter(): void {
+    const startDate = this.dateRangeForm?.value.startDate;
+    const endDate = this.dateRangeForm?.value.endDate;
+
+    // Filter the data based on the selected date range
+    this.filteredProductsData = this.originalProductsData.filter(
+      (product: any) => {
+        const productDate = new Date(product.date); // Replace "date" with your actual date field name in the data
+        return productDate >= startDate && productDate <= endDate;
+      }
+    );
+
+    // Update the chart with the filtered data
+    const products = this.filteredProductsData.map(
+      (p: { nombreArticulo: string }) => p.nombreArticulo
+    );
+    const quantities = this.filteredProductsData.map(
+      (p: { totalQuantity: any }) => p.totalQuantity
+    );
+
+    const chartData = this.mostSoldProductsChart?.data;
+if (chartData) {
+  chartData.datasets[0].data = products;
+  this.mostSoldProductsChart.update();
+}
+
+    const chartData = this.mostSoldProductsChart?.data;
+    if (chartData) {
+      chartData.datasets[0].data = quantities;
+      this.mostSoldProductsChart.update();
+    }
+
+    this.mostSoldProductsChart?.update();
+  }
+*/
   onTabChanged(event: MatTabChangeEvent): void {
     switch (event.index) {
       case 0:

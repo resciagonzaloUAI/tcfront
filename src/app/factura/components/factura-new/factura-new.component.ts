@@ -231,7 +231,10 @@ export class FacturaNewComponent implements OnInit {
       .create(factura)
       .pipe(
         tap((resp) => {
-          this.snackBar.open(`Factura creada correctamente`);
+          const messagge = 'Factura creada correctamente';
+          this.snackBar.open(messagge, 'Cerrar', {
+            duration: 3000,
+          });
           this.router.navigate(['/factura']);
         })
       )

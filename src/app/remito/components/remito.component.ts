@@ -72,16 +72,20 @@ export class RemitoComponent implements OnInit {
           .cumpleRemito(row['Nro. Remito'])
           .pipe(
             tap(() => {
-              this.snackBar.open(
-                `Remito: ${row['Nro. Remito']} cumplido correctamente`
-              );
+              const messagge = `Remito: ${row['Nro. Remito']} cumplido correctamente`;
+              this.snackBar.open(messagge, 'Cerrar', {
+                duration: 3000,
+              });
               this.getData();
             })
           )
           .subscribe(noop);
       }
     } else {
-      this.snackBar.open(`Su usuario no tiene permisos para esta operación`);
+      const messagge = `Su usuario no tiene permisos para esta operación`;
+      this.snackBar.open(messagge, 'Cerrar', {
+        duration: 3000,
+      });
     }
   }
 }
