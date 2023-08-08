@@ -10,4 +10,5 @@ export interface Factura {
   facturaArticulo?: FacturaArticulo[];
   createdAt?: Date;
   idAlm?: number;
+  nombreCliente?: string;
 }

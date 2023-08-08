@@ -17,6 +17,7 @@ import {
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import * as moment from 'moment';
 import 'chartjs-adapter-moment';
+import { DatePipe } from '@angular/common';
 
 Chart.register(
   LinearScale,
@@ -43,10 +44,19 @@ export class ReportesComponent implements OnInit {
     number[],
     unknown
   > | null = null;
+  mostBuyProvidersChart: Chart<
+    keyof ChartTypeRegistry,
+    number[],
+    unknown
+  > | null = null;
   mostSoldSalesChart: Chart | null = null;
   clientsInfo: { id: string; value: number; color: string }[] = [];
+  providersInfo: { id: string; value: number; color: string }[] = [];
 
-  constructor(private readonly reportesService: ReportesService) {}
+  constructor(
+    private readonly reportesService: ReportesService,
+    private readonly datePipe: DatePipe
+  ) {}
 
   ngOnInit(): void {
     this.loadProductsChart();
@@ -112,6 +122,9 @@ export class ReportesComponent implements OnInit {
       case 2:
         this.loadSalesChart();
         break;
+      case 3:
+        this.loadProvidersChart();
+        break;
       default:
         break;
     }
@@ -124,7 +137,9 @@ export class ReportesComponent implements OnInit {
         this.mostSoldSalesChart = null;
       }
       // Extract dates and total amounts from the data
-      const dates = data.map((sale: { date: string }) => sale.date);
+      const dates = data.map((sale: { date: string }) =>
+        this.datePipe.transform(sale.date, 'dd-MM')
+      );
       const totalAmounts = data.map(
         (sale: { totalAmount: number }) => sale.totalAmount
       );
@@ -146,7 +161,6 @@ export class ReportesComponent implements OnInit {
         options: {
           scales: {
             x: {
-              type: 'time',
               // Remove the parser line; the Moment adapter will handle parsing
               title: {
                 display: true,
@@ -237,6 +251,117 @@ export class ReportesComponent implements OnInit {
               ),
               borderColor: Array.from(
                 { length: clients.length },
+                () =>
+                  `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
+                    Math.random() * 255
+                  )}, ${Math.floor(Math.random() * 255)}, 1)`
+              ),
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          plugins: {
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                title: (tooltipItem) => {
+                  return labels[tooltipItem[0].dataIndex];
+                },
+              },
+              titleColor: 'black',
+              bodyColor: 'black',
+            },
+            legend: {
+              labels: {
+                color: 'black',
+              },
+            },
+          },
+        },
+      });
+    });
+  }
+
+  loadProvidersChart(): void {
+    this.reportesService.getMostBuyProviders().subscribe((data: any) => {
+      console.log('aca', data);
+
+      if (this.mostBuyProvidersChart) {
+        this.mostBuyProvidersChart.destroy();
+        this.mostBuyProvidersChart = null;
+      }
+
+      const providers = data.map(
+        (proveedor: {
+          idProveedor: any;
+          totalCompras: any;
+          nombreProveedor: string;
+        }) => ({
+          label: proveedor.nombreProveedor,
+          value: proveedor.totalCompras,
+        })
+      );
+      const labels = providers.map(
+        (proveedor: { label: any }) => proveedor.label
+      );
+      const values = providers.map(
+        (proveedor: { value: any }) => proveedor.value
+      );
+
+      const providerIds = data.map(
+        (proveedor: { nombreProveedor: string; idProveedor: any }) =>
+          proveedor.nombreProveedor
+      );
+      const providerAmounts = data.map(
+        (provider: { totalCompras: any }) => +provider.totalCompras
+      );
+
+      const backgroundColors = providerIds.map(
+        () =>
+          'rgba(' +
+          [
+            Math.floor(Math.random() * 256),
+            Math.floor(Math.random() * 256),
+            Math.floor(Math.random() * 256),
+            '0.2',
+          ].join(',') +
+          ')'
+      );
+      const borderColors = backgroundColors.map((color: any) =>
+        color.replace('0.2', '1')
+      );
+
+      this.providersInfo = providerIds.map(
+        (id: any, index: string | number) => {
+          return {
+            id,
+            value: providerAmounts[index],
+            color: backgroundColors[index],
+          };
+        }
+      );
+
+      this.mostBuyProvidersChart = new Chart<
+        keyof ChartTypeRegistry,
+        number[],
+        unknown
+      >('mostBuyProvidersCanvas', {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              data: values,
+              backgroundColor: Array.from(
+                { length: providers.length },
+                () =>
+                  `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
+                    Math.random() * 255
+                  )}, ${Math.floor(Math.random() * 255)}, 0.2)`
+              ),
+              borderColor: Array.from(
+                { length: providers.length },
                 () =>
                   `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(
                     Math.random() * 255

@@ -9,7 +9,7 @@ import { noop, tap } from 'rxjs';
 })
 export class NotaPedidoComponent implements OnInit {
   notaspedidos: any[] = [];
-  headers: Array<string> = ['Nro. NP', 'Id Art.', 'Cantidad'];
+  headers: Array<string> = ['Nro. NP', 'Cliente', 'Valor'];
 
   constructor(
     private readonly notapedidoService: NotaPedidoService,
@@ -25,15 +25,15 @@ export class NotaPedidoComponent implements OnInit {
       .getArticulosByNotaPedido()
       .pipe(
         tap((notaspedidos) => {
+          console.log(notaspedidos);
+
           this.notaspedidos = notaspedidos.map((np) => {
             return {
               'Nro. NP': np.idnotped,
-              'Id Art.': np.idArticulo,
-              Cantidad: np.cantidad,
+              Cliente: np.nombreCliente,
+              Valor: '$ ' + np.precio,
             };
           });
-          console.log(notaspedidos);
-
           this.cd.detectChanges();
         })
       )

@@ -15,7 +15,7 @@ import { formatDate } from '@angular/common';
 })
 export class FacturaComponent implements OnInit {
   facturas: any[] = [];
-  headers: Array<string> = ['Nro. Factura', 'Id Cliente', 'Precio', 'Fecha'];
+  headers: Array<string> = ['Nro. Factura', 'Cliente', 'Precio', 'Fecha'];
   actions: Array<{ name: string; label: string }> = [
     { name: 'download', label: 'Descargar' },
   ];
@@ -35,12 +35,10 @@ export class FacturaComponent implements OnInit {
       .getAll()
       .pipe(
         tap((facturas) => {
-          console.log(facturas);
-
           this.facturas = facturas.map((fact) => {
             return {
               'Nro. Factura': fact.idbfactura,
-              'Id Cliente': fact.idCliente,
+              Cliente: fact.nombreCliente,
               Precio: '$ ' + fact.precio,
               Fecha: formatDate(
                 fact?.createdAt!,

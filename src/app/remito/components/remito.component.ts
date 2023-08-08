@@ -12,7 +12,13 @@ import { Remito } from 'src/app/shared/types/Remito';
 })
 export class RemitoComponent implements OnInit {
   remitos: any[] = [];
-  headers: Array<string> = ['Nro. Remito', 'Nro. Factura', 'Importe', 'Estado'];
+  headers: Array<string> = [
+    'Nro. Remito',
+    'Nro. Factura',
+    'Cliente',
+    'Importe',
+    'Estado',
+  ];
   actions: Array<{ name: string; label: string }> = [
     { name: 'cumplirRemitos', label: 'Cumplir Remito' },
   ];
@@ -43,6 +49,7 @@ export class RemitoComponent implements OnInit {
             return {
               'Nro. Remito': rem.idremito,
               'Nro. Factura': rem.idcfactura,
+              Cliente: rem.nombreCliente,
               Importe: rem.importeFinal,
               Estado: rem.estado,
             };

@@ -16,7 +16,13 @@ export class ListadoComponent implements OnInit {
   facturas: any[] = [];
   idClienteRem: number = 0;
   clientes: any[] = [];
-  headers: Array<string> = ['Nro. Remito', 'Nro. Factura', 'Importa', 'Estado'];
+  headers: Array<string> = [
+    'Nro. Remito',
+    'Nro. Factura',
+    'Cliente',
+    'Importa',
+    'Estado',
+  ];
 
   constructor(
     private readonly remitoService: RemitoService,
@@ -62,7 +68,7 @@ export class ListadoComponent implements OnInit {
             return {
               'Nro. Remito': rem.idremito,
               'Nro. Factura': rem.idcfactura,
-              // 'Nombre Cliente': nombreCliente,
+              Cliente: rem.nombreCliente,
               Importa: rem.importeFinal,
               Estado: rem.estado,
             };

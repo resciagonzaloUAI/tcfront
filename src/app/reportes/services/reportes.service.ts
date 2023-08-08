@@ -19,6 +19,10 @@ export class ReportesService extends BaseService<any> {
     return this.http.get(`${this.API_SERVER}/${this.endpoint}/customers`);
   }
 
+  getMostBuyProviders(): Observable<any> {
+    return this.http.get(`${this.API_SERVER}/${this.endpoint}/providers`);
+  }
+
   getSales(): Observable<any> {
     return this.http.get(`${this.API_SERVER}/${this.endpoint}/sales`);
   }

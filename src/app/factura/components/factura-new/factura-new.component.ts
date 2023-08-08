@@ -214,9 +214,6 @@ export class FacturaNewComponent implements OnInit {
   }
 
   crearFactura(): void {
-    idAlm: 1;
-    console.log(this.idAlm);
-
     const factura: Factura = {
       idCliente: this.clienteControl.getRawValue().idcliente,
       facturaArticulo: this.selectedArticulos.map((art) => ({

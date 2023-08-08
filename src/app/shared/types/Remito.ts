@@ -4,4 +4,5 @@ export interface Remito {
   idpedido?: number;
   importeFinal?: number;
   estado?: string;
+  nombreCliente?: string;
 }

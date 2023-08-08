@@ -12,12 +12,9 @@ export class NotaPedidoService extends BaseService<any> {
     super(httpClient, 'nota-pedido');
   }
 
-  getArticulosByNotaPedido(params?: any): Observable<NotaPedidoArticulo[]> {
-    return this.http.get<NotaPedidoArticulo[]>(
-      `${this.API_SERVER}/${this.endpoint}`,
-      {
-        params,
-      }
-    );
+  getArticulosByNotaPedido(params?: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_SERVER}/${this.endpoint}`, {
+      params,
+    });
   }
 }

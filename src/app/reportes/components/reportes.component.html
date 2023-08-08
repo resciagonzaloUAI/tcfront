@@ -10,14 +10,14 @@
           <thead>
             <tr>
               <th>Cliente</th>
-              <th>Cantidad</th>
+              <th>Gasto</th>
               <th>Color</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let client of clientsInfo">
               <td>{{ client.id }}</td>
-              <td>{{ client.value }}</td>
+              <td>{{ client.value | currency }}</td>
               <td>
                 <div
                   style="background-color: {{
@@ -33,6 +33,33 @@
 
     <mat-tab label="Ventas">
       <canvas id="mostSoldSalesCanvas"></canvas>
+    </mat-tab>
+    <mat-tab label="Proveedores">
+      <div class="pie-report">
+        <canvas id="mostBuyProvidersCanvas"></canvas>
+        <table>
+          <thead>
+            <tr>
+              <th>Proveedor</th>
+              <th>Cantidad</th>
+              <th>Color</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let proveedor of providersInfo">
+              <td>{{ proveedor.id }}</td>
+              <td>{{ proveedor.value }}</td>
+              <td>
+                <div
+                  style="background-color: {{
+                    proveedor.color
+                  }}; width: 20px; height: 20px;"
+                ></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>
